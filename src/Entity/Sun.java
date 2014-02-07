@@ -15,7 +15,7 @@ import org.newdawn.slick.SlickException;
  * @author skas
  */
 
-public class Sun {
+public class Sun implements Renderable, Updateable {
     Image img;
     private float x;
     private float y;
@@ -40,21 +40,19 @@ public class Sun {
         }
     }
     
-    public void update(int delta)
-    {
-        System.out.println(this.x/delta);
-        this.rot += 0.1;
-        
-        this.img.setRotation(this.rot);
-        
-        
-    }
-    
     public void render()
     {
 //        img.setCenterOfRotation(255*scale,255*scale);
+        
         this.img.draw(x, y, scale);
         System.out.println(img.getCenterOfRotationX()+" - " + img.getCenterOfRotationY());
+    }
+
+    public void update(int delta) 
+    {
+        System.out.println(this.x/delta);
+        this.rot += 0.1;
+        this.img.setRotation(this.rot);
     }
     
     
