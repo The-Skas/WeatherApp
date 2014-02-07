@@ -10,20 +10,23 @@ package src;
  *
  * @author skas
  */
-import Entity.Sun;
-import weatherapp.*;
+import src.Entity.Render;
+import src.Entity.Sun;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 
 public class WeatherApp extends BasicGame {
         private Image img;
         private Sun sun;
+        private Font font;
 	public WeatherApp(String gamename) {
 		super(gamename);
 	}
@@ -33,6 +36,8 @@ public class WeatherApp extends BasicGame {
             System.out.println("Initialising");
             img = new Image("res/sun.png");
             sun = new Sun();
+//            font = new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.BOLD, 16), false);
+            
 	}
 
 	@Override
@@ -42,9 +47,14 @@ public class WeatherApp extends BasicGame {
 	}
 
 	@Override
-	public void render(GameContainer gc, Graphics g) throws SlickException {
-//		g.drawString("Howdy!", 30, 30);
+	public void render(GameContainer gc, Graphics g) throws SlickException 
+        {
+//            g.setFont(font);
+            g.drawString("Howdy!", 30, 30);
+            if(sun instanceof Render)
+            {
                 sun.render();
+            }
                 
 	}
 

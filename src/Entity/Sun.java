@@ -4,21 +4,20 @@
  * and open the template in the editor.
  */
 
-package Entity;
+package src.Entity;
+
 
 import java.util.Set;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Renderable;
 import org.newdawn.slick.SlickException;
 
 /**
  *
  * @author skas
  */
-
-public class Sun implements Renderable, Updateable {
+public class Sun extends Render implements Updateable {
     Image img;
-    private float x;
-    private float y;
     private float rot;
     private float scale;
     public Sun() throws SlickException
@@ -30,7 +29,7 @@ public class Sun implements Renderable, Updateable {
             this.x = 5;
             this.y = 5;
             this.scale = 0.5f;
-            img.setCenterOfRotation(10,10);
+            //img.setCenterOfRotation(10,10);
             
             
             

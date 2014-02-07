@@ -4,12 +4,11 @@
  * and open the template in the editor.
  */
 
-package src;
-
+package src.Entity;
 /**
  *
  * @author skas
  */
-interface Updateable {
+public interface Updateable {
     void update(int delta);
 }
