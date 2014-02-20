@@ -6,53 +6,63 @@ import com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_highgui.*;
 import static com.googlecode.javacv.cpp.opencv_imgproc.*;
+import javax.swing.JOptionPane;
 
 
 public class RedFinder 
 {      
+    static OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
+    static IplImage frame;
+    static int height;
+    static int width;
+    
+    
     public static void main(String[] args)
     {
-        controller();
+        if(initializeCamera())
+        {
+            controller();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "No camera detected!");
+        }
     }
     
-    public static void controller()
-    { 
-        OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
+    public static boolean initializeCamera()
+    {
         boolean done = false;
         final int MAX_ATTEMPTS = 20;
         int attempt = 0;
-        IplImage frame;
-        //cvNamedWindow("Video");     
-        //cvNamedWindow("HSV");
-                
+        
         //Checks for camera
         while (!done) 
         {
             attempt += 1;
-            try {
-                    grabber.start();
-                    done = true;
-                } 
-                catch (FrameGrabber.Exception ex) 
+            try 
+            {
+                grabber.start();
+                frame = grabber.grab();
+                CvSize size = cvGetSize(frame);
+                height = size.height();
+                width = size.width();
+                
+                System.out.println("h: " + height + " w: " + width);
+                done = true;
+            } 
+            catch(FrameGrabber.Exception ex) 
+            {
+                if (attempt == MAX_ATTEMPTS) 
                 {
-                    if (attempt == MAX_ATTEMPTS) 
-                    {
-                        System.err.println("Camera initialisation aborted. Max attempts reached.");
-                    }
+                    System.err.println("Error: " + ex.getMessage());
                 }
+            }
         }
-
-        try
-        {
-            frame = grabber.grab();
-            IplImage imgTracking = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 3);
-            cvZero(imgTracking);
-        }
-        catch(FrameGrabber.Exception ex)
-        {
-            System.err.println("Problem encountered while grabbing frames: check camera");
-        }
-
+        return done;
+    }
+    
+    public static void controller()
+    { 
         while(true)
         {
             try
@@ -75,6 +85,9 @@ public class RedFinder
                 
                 System.out.println(coordinates[0]+ ", " + coordinates[1]);
                 
+                //DEBUG: displays video capture and HSV windows
+                //cvNamedWindow("Video");     
+                //cvNamedWindow("HSV");                
                 //cvShowImage("HSV", imgThresh);
                 //cvShowImage("Video", frame);
                 
@@ -87,7 +100,7 @@ public class RedFinder
             }
             catch(FrameGrabber.Exception ex)
             {
-                System.err.println("Problem encountered while grabbing frames: check camera");
+                System.err.println("Error: " + ex.getMessage());
             }
         }
         
@@ -110,7 +123,7 @@ public class RedFinder
         CvMoments moments = new CvMoments();
         cvMoments(imgThresh, moments, 1);
         
-        double momX10 = cvGetSpatialMoment(moments, 1, 0); // (x,y)
+        double momX10 = cvGetSpatialMoment(moments, 1, 0);// (x,y)
         double momY01 = cvGetSpatialMoment(moments, 0, 1);// (x,y)
         double area = cvGetCentralMoment(moments, 0, 0);
         
