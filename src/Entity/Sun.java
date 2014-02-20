@@ -8,30 +8,30 @@ package src.Entity;
 
 
 import java.util.Set;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Renderable;
 import org.newdawn.slick.SlickException;
+import src.MouseW;
 
 /**
  *
  * @author skas
  */
 public class Sun extends Render implements Updateable {
-    Image img;
-    private float rot;
-    private float scale;
-    public Sun() throws SlickException
+    public Sun(int x,int y,float scale) throws SlickException
     {
+        super();
         try {
-            img = new Image("res/sun.png");
-            img.setFilter(Image.FILTER_LINEAR);
+            this.img = new Image("res/sun.png");
+            this.img.setFilter(Image.FILTER_LINEAR);
             this.rot = img.getRotation();
-            this.x = 5;
-            this.y = 5;
-            this.scale = 0.5f;
-            //img.setCenterOfRotation(10,10);
-            
-            
+            this.x = x;
+            this.y = y;
+            this.scale = scale;
+//            img.setCenterOfRotation(((float)img.getWidth())*scale, ((float)img.getHeight())*scale);
+            img.setCenterOfRotation(50,50);
             
         }catch(SlickException e)
         {
@@ -39,19 +39,27 @@ public class Sun extends Render implements Updateable {
         }
     }
     
-    public void render()
+    public void render(Graphics g)
     {
-//        img.setCenterOfRotation(255*scale,255*scale);
+        super.render(g);
+         g.drawString("Howdy!", 30, 30);
+         //This centerOfRotation Has to be set everyupdate;
+        img.setCenterOfRotation(this.getWidth()/2,this.getHeight()/2);
+        this.img.draw(getX(),getY(), this.getScale());
         
-        this.img.draw(x, y, scale);
-        System.out.println(img.getCenterOfRotationX()+" - " + img.getCenterOfRotationY());
+        //This is to check if the mouse is over the sun.
+        this.isHitRadius(MouseW.getX(), MouseW.getY());
+       
+        
+      
     }
 
     public void update(int delta) 
     {
-        System.out.println(this.x/delta);
         this.rot += 0.1;
         this.img.setRotation(this.rot);
+        
+        
     }
     
     
