@@ -42,9 +42,8 @@ public class WeatherApp extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
             entities = new ArrayList<>();
             Render.entities = entities;
-            Render.entities = entities;
-            Render.screenWidth = gc.getScreenWidth();
-            Render.screenHeight = gc.getScreenHeight();
+            Render.screenWidth = 1024;
+            Render.screenHeight = 768;
             float midX = 1024.0f;
             float midY = 768.0f;
             new Sun(500, 200, 1.0f);
@@ -102,7 +101,7 @@ public class WeatherApp extends BasicGame {
 			AppGameContainer appgc;
 			appgc = new AppGameContainer(new WeatherApp("Simple Slick Game"));
 			appgc.setDisplayMode(1024, 768, false);
-                        appgc.setVSync(true);
+                        appgc.setVSync(false);
 			appgc.start();
 		} catch (SlickException ex) {
 			Logger.getLogger(WeatherApp.class.getName()).log(Level.SEVERE, null, ex);

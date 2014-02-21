@@ -8,6 +8,7 @@ package src.Entity;
 
 
 import java.util.Set;
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -58,7 +59,6 @@ public class Sun extends Render implements Updateable {
     {
         this.rot += 0.1*0.1 * delta;
         this.img.setRotation(this.rot);
-        
         
     }
     
