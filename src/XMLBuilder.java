@@ -4,6 +4,7 @@ import org.w3c.dom.Document;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
@@ -16,8 +17,9 @@ public class XMLBuilder {
     
     public static void main(String []args)
     {
-        Forecast weatherData  = getForecast(getLocation("London"), true);
-        System.out.println(weatherData.getWeatherToday());
+        //Forecast weatherData  = getForecast(getLocation("London"), true);
+        //System.out.println(weatherData.getWeatherToday());
+        getLocation("London");
     }
     
     public static Forecast getForecast(int location, boolean celsius)
@@ -102,10 +104,12 @@ public class XMLBuilder {
         return f;
     }
     
-    public static int getLocation(String name)
+    public static ArrayList getLocation(String name)
     {
         String url = "http://query.yahooapis.com/v1/public/yql?q=select+*+from+geo.places+where+text+=+";
         url += "'" + name + "'";
+        
+        ArrayList<String[]> locations = new ArrayList<String[]>();
         
         InputStream inputXml = null;
         
@@ -117,11 +121,19 @@ public class XMLBuilder {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(inputXml);
             NodeList nList = doc.getElementsByTagName("place");
-            Node nNode = nList.item(0);
-            Element eElement = (Element) nNode;
-            String woeidString = (eElement.getElementsByTagName("woeid").item(0).getTextContent());
             
-            return Integer.parseInt(woeidString);
+            for(int i = 0; i < nList.getLength(); i++)
+            {
+                String[] locationEntry = new String[4];
+                Node nNode = nList.item(i);
+                Element eElement = (Element) nNode;
+                locationEntry[0] = (eElement.getElementsByTagName("woeid").item(0).getTextContent());
+                locationEntry[1] = (eElement.getElementsByTagName("name").item(0).getTextContent());
+                locationEntry[2] = (eElement.getElementsByTagName("country").item(0).getTextContent());
+                locationEntry[3] = (eElement.getElementsByTagName("admin1").item(0).getTextContent());
+                locations.add(locationEntry);
+                System.out.println(locationEntry[0] + " " + locationEntry[1] + " " + locationEntry[2] + " " + locationEntry[3]);
+            }
         }
         catch (Exception ex)
         {
@@ -140,7 +152,7 @@ public class XMLBuilder {
             }
         }
         
-        return -1;
+        return locations;
     }
     
 }
