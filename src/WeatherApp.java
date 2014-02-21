@@ -26,6 +26,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
+import src.Entity.Button;
 import src.Entity.Updateable;
 import src.MouseW;
 
@@ -41,13 +42,15 @@ public class WeatherApp extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
             entities = new ArrayList<>();
             Render.entities = entities;
-            System.out.println("Initialising");
-            img = new Image("res/sun.png");
-//            new Sun(5,5, 1.0f);
-            new Sun(500, 200, 1.0f);
             Render.entities = entities;
-            Render.screenWidth = gc.getWidth();
-            Render.screenHeight = gc.getHeight();
+            Render.screenWidth = gc.getScreenWidth();
+            Render.screenHeight = gc.getScreenHeight();
+            float midX = 1024.0f;
+            float midY = 768.0f;
+            new Sun(500, 200, 1.0f);
+            new Button("buttonframe.png",
+                    midX/2.0f,midY/2.0f, 
+                     1.0f);
 //            font = new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.BOLD, 16), false);
             //         g.setFont(font);
 
@@ -81,6 +84,7 @@ public class WeatherApp extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException 
         {
+           g.setBackground(Color.gray);
            for(int i = 0; i < entities.size();i++)
            {
                

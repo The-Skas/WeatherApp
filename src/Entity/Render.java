@@ -51,6 +51,8 @@ public abstract class Render {
      }
      public Render()
      {
+         if(this.scale <= 0)
+             this.scale = 1;
          if(entities !=null)
          {
             Render.entities.add(this);
