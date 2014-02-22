@@ -23,5 +23,9 @@ public class MouseW {
         return Render.screenHeight - Mouse.getY();
     }
     
+    public static boolean isButtonDown(int button)
+    {
+        return Mouse.isButtonDown(button);
+    }
     
 }

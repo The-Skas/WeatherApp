@@ -7,9 +7,9 @@
 package src.Entity;
 
 import java.util.ArrayList;
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Graphics;
 /**
  *
  * @author skas
@@ -33,7 +33,7 @@ public abstract class Render {
      protected Image img;
      protected float x, y;
      protected float rot;
-     protected float scale;
+     protected float scale = 1.0f;
      
      public static float getWidthScreenScale()
      {
@@ -63,6 +63,12 @@ public abstract class Render {
              entities = new ArrayList<>();
          }
      }
+     
+     public void reInit()
+     {
+         //perform scaling to resolution for objects, specifically text.
+     }
+     
      public void setX(float x)
      {
         this.x=x;
@@ -100,11 +106,12 @@ public abstract class Render {
      
      public boolean isHit(float x, float y)
      {
+         
          boolean ishit = x >= this.getX() && x <= this.getX()+this.getWidth() &&
                          y >= this.getY() && y <= this.getY()+this.getHeight();
          if(DEBUG) {
-            System.out.println("Mouse X: "+x +" --- Mouse Y: "+y);
-            System.out.println("Sun   X: "+this.getX() +" --- Sun   Y: "+this.getY());
+//            System.out.println("Mouse X: "+x +" --- Mouse Y: "+y);
+//            System.out.println("Sun   X: "+this.getX() +" --- Sun   Y: "+this.getY());
             
             if(ishit)
             {
@@ -116,6 +123,7 @@ public abstract class Render {
          
          return x >= this.getX() && x <= this.getX()+this.getWidth() &&
                  y >= this.getY() && y <= this.getY()+this.getHeight();
+         
      }
      
      public boolean isHitRadius(float x, float y)
@@ -134,7 +142,7 @@ public abstract class Render {
          return false;
      }
      
-     public void render(Graphics g)
+     public void render(org.newdawn.slick.Graphics g)
      {
          g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
      }

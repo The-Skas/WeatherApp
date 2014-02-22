@@ -26,14 +26,14 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
-import src.Entity.Button;
-import src.Entity.Updateable;
-import src.MouseW;
+import src.*;
+import src.Entity.*;
 
 public class WeatherApp extends BasicGame {
         private Image img;
         private Sun sun;
         private Font font;
+        private boolean toggleResolution = false;
         private ArrayList<src.Entity.Render> entities;
 	public WeatherApp(String gamename) {
 		super(gamename);
@@ -47,12 +47,7 @@ public class WeatherApp extends BasicGame {
             float midX = 1024.0f;
             float midY = 768.0f;
             new Sun(500, 200, 1.0f);
-            new Button("buttonframe.png",
-                    midX/2.0f,midY/2.0f, 
-                     1.0f);
-//            font = new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.BOLD, 16), false);
-            //         g.setFont(font);
-
+            new ButtonTab(midX/2.0f,midY/2.0f, "Feb 27");
 	}
 
 	@Override
@@ -68,14 +63,34 @@ public class WeatherApp extends BasicGame {
            
            if(container.getInput().isKeyDown(Input.KEY_ENTER))
            {
+            int newWidthRes; int newHeightRes;
+            if(this.toggleResolution)
+            {
+                newWidthRes = 1024;
+                newHeightRes = 768;
+            }
+            else
+            {
+                newWidthRes = 480;
+                newHeightRes = 320;
+            }
+            
             AppGameContainer gc = (AppGameContainer) container;
             System.out.println("screen width value b4!!: "+gc.getScreenWidth());
-            gc.setDisplayMode(480, 320, false);
+            gc.setDisplayMode(newWidthRes, newHeightRes, false);
             
             System.out.println("screen width value!!: "+gc.getScreenWidth());
-            Render.screenHeight = 320;
-            Render.screenWidth =  480;
-            container.setPaused(true);
+            Render.screenHeight = newHeightRes;
+            Render.screenWidth =  newWidthRes;
+            
+            for(int i = 0; i < entities.size();i++)
+            {
+                if(entities.get(i) instanceof Render)
+                {
+                    entities.get(i).reInit();
+                }
+            }
+            this.toggleResolution = !this.toggleResolution;
            }
           
 	}
