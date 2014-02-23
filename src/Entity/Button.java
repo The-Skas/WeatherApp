@@ -26,8 +26,8 @@ import src.MouseW;
 */
 public abstract class Button extends Render implements Updateable {
     protected enum ButtonState {UP, DOWN, ROLLOVER};
-    private final String prefix = "res/";
-    private Color color;
+    //So derived buttons can access 'color'
+    protected Color color;
     private ButtonState state;
     public Font font;
     public TextUI text;
@@ -42,12 +42,14 @@ public abstract class Button extends Render implements Updateable {
     public Button(String path,float x, float y, float scale, String text){
         super();
         try {
-            this.img = new Image(prefix+path);
+            this.img = new Image(Render.prefix+path);
             this.x = x;
             this.y = y;
             this.scale = scale;
             
             if(text.isEmpty())
+                //Make sure to add to list after the current entity
+                //such that the text is always rendered in front.
                 this.text = new TextUI(this,"");
             else
                 this.text = new TextUI(this,text);
@@ -77,26 +79,11 @@ public abstract class Button extends Render implements Updateable {
     }
     public void render(Graphics g)
     {
-//        for(int i = 0; i < 1000; i++)
-//        g.fillRoundRect(0, 0, 100, 150, 20,20);
-//        g.setLineWidth(2.0f);
-//        g.setColor(Color.gray);
-//        g.drawRoundRect(0, 0, 100, 150, 20);
-        if(isButtonUp())
-        {
-            this.img.draw(this.getX(), this.getY(), this.getScale(),color);
-        }
-        else
-        {    
-            this.img.draw(this.getX(), this.getY(), this.getScale(),new Color(100,100,100, 255)); 
-        }
-        
-        //Then draw Text
-         g.setFont(this.font);
-         
-         text.render(g);      
+        this.img.draw(this.getX(), this.getY(), this.getScale(),color);  
+        //the TextUI Object is rendered from the Parent Class.
     }
-
+    
+    //All logic here.
     @Override
     public void update(int delta) {
         if(this.isHit(MouseW.getX(), MouseW.getY()))

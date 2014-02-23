@@ -47,7 +47,9 @@ public class WeatherApp extends BasicGame {
             float midX = 1024.0f;
             float midY = 768.0f;
             new Sun(500, 200, 1.0f);
-            new ButtonTab(midX/2.0f,midY/2.0f, "Feb 27");
+            
+            //DrawBottomUI
+            new BottomUI(-2, 520);
 	}
 
 	@Override
@@ -104,11 +106,7 @@ public class WeatherApp extends BasicGame {
                
                 entities.get(i).render(g);
                
-           }
-           
-
-           
-                
+           }    
 	}
         
 	public static void main(String[] args) {

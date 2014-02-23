@@ -7,9 +7,12 @@
 package src.Entity;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 /**
  *
  * @author skas
@@ -26,6 +29,7 @@ public abstract class Render {
      public static ArrayList<src.Entity.Render> entities;
      public static final float D_SCREENWIDTH  = 1024;
      public static final float D_SCREENHEIGHT =  768;
+     public static final String prefix = "res/";
      //Should store the width/height of screen
      public static int screenWidth;
      public static int screenHeight;
@@ -63,6 +67,23 @@ public abstract class Render {
              entities = new ArrayList<>();
          }
      }
+     public Render(float x, float y, String imgPATH)
+     {
+         this();
+         this.x = x;
+         this.y = y;
+         this.scale = 1.0f;
+         LoadImg(imgPATH);
+     }
+     
+     public void LoadImg(String imgPATH)
+     {
+         try {
+             this.img = new Image(prefix+imgPATH);
+         } catch (SlickException ex) {
+             Logger.getLogger(Render.class.getName()).log(Level.SEVERE, null, ex);
+         }
+     }
      
      public void reInit()
      {
@@ -81,12 +102,12 @@ public abstract class Render {
      
      public float getX()
      {
-         return this.x * getScreenScale();
+         return this.x * getWidthScreenScale();
      }
     
      public float getY()
      {
-         return this.y * getScreenScale();
+         return this.y * getHeightScreenScale();
      }
      
      public float getScale()
@@ -103,7 +124,18 @@ public abstract class Render {
          return this.img.getHeight() * getScale();
      }
      
-     
+     //this returns the width of the image scaled to a resolution of ONLY
+     //the width
+     public float getWidthTrue()
+     {
+         return this.img.getWidth() * getWidthScreenScale();
+     }
+     //this returns the height of the image scaled to a resolution of ONLY
+     //the height
+     public float getHeightTrue()
+     {
+         return this.img.getHeight() * getHeightScreenScale();
+     }
      public boolean isHit(float x, float y)
      {
          
@@ -145,6 +177,7 @@ public abstract class Render {
      public void render(org.newdawn.slick.Graphics g)
      {
          g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+         this.img.draw(this.getX(), this.getY(), this.getScale());
      }
      
      public void destroy()
