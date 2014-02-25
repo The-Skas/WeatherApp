@@ -1,4 +1,4 @@
-package myweatherapp;
+package src;
 
 import org.w3c.dom.Document;
 import java.io.IOException;
@@ -11,15 +11,97 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;
 
-public class XMLBuilder {
-    
+public class XMLBuilder {    
     
     
     public static void main(String []args)
     {
         //Forecast weatherData  = getForecast(getLocation("London"), true);
         //System.out.println(weatherData.getWeatherToday());
-        getLocation("London");
+        //getLocation("London");
+        for(int i =0; i < 48; i++)
+        {
+            System.out.println(i + "= " + codeTranslator(Integer.toString(i)));
+        }
+    }
+    
+    //Translates Yahoo weather code into a smaller set
+    private static String codeTranslator(String inputCode)
+    {
+        int code = Integer.parseInt(inputCode);
+        int outputCode;
+        if(code >= 0 && code <= 4)
+        {
+            outputCode = 4;
+        }
+        else if(code >= 5 && code <= 7)
+        {
+            outputCode = 5;
+        }
+        else if(code >= 8 && code <= 12)
+        {
+            outputCode = 3;
+        }
+        else if(code >= 13 && code <= 16 || code == 18)
+        {
+            outputCode = 5;
+        }
+        else if(code >= 19 && code <= 22)
+        {
+            outputCode = 6;
+        }
+        else if(code >= 23 && code <=25)
+        {
+            outputCode = 0;
+        }
+        else if(code >= 26 && code <= 28)
+        {
+            outputCode = 2;
+        }
+        else if(code == 29 || code == 30)
+        {
+            outputCode = 1;
+        }
+        else if(code >= 31 && code <= 34)
+        {
+            outputCode = 0;
+        }
+        else if(code >= 37 && code <= 39)
+        {
+            outputCode = 4;
+        }
+        else if(code >= 41 && code <= 43)
+        {
+            outputCode = 5;
+        }
+        else
+        {
+            switch (code) 
+            {
+                case 17: outputCode = 4;
+                         break;
+                case 35: outputCode = 4;
+                         break;
+                case 36: outputCode = 0;
+                         break;
+                case 40: outputCode = 3;
+                         break;
+                case 44: outputCode = 1;
+                         break;
+                case 45: outputCode = 4;
+                         break;
+                case 46: outputCode = 5;
+                         break;
+                case 47: outputCode = 4;
+                         break;
+                case 3200: outputCode = 7;
+                           break;
+                default: outputCode = 7;
+                         break;
+            }
+        }
+        
+        return Integer.toString(outputCode);
     }
     
     public static Forecast getForecast(int location, boolean celsius)
@@ -47,7 +129,7 @@ public class XMLBuilder {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(inputXml);
-            NodeList nodi = doc.getElementsByTagName("yweather:forecast");
+            NodeList nodi = doc.getElementsByTagName("yweather:forecbast");
 
             for(int i = 0; i < nodi.getLength(); i++)
             {
@@ -56,7 +138,7 @@ public class XMLBuilder {
                 fiveDays[i][1] = node.getAttribute("date");
                 fiveDays[i][2] = node.getAttribute("low");
                 fiveDays[i][3] = node.getAttribute("high");
-                fiveDays[i][4] = node.getAttribute("code");
+                fiveDays[i][4] = codeTranslator(node.getAttribute("code"));
             }
             
             //Wind speed
@@ -72,7 +154,7 @@ public class XMLBuilder {
             //weather Today code
             nodi = doc.getElementsByTagName("yweather:condition");
             node = (Element) nodi.item(0);
-            weatherToday = Integer.parseInt(node.getAttribute("code"));
+            weatherToday = Integer.parseInt(codeTranslator(node.getAttribute("code")));
             
             //units of measurement
             nodi = doc.getElementsByTagName("yweather:units");
@@ -86,7 +168,7 @@ public class XMLBuilder {
         }
         catch (Exception ex)
         {
-           System.out.println("Error in makeForecast: " + ex.getMessage());
+           JOptionPane.showMessageDialog(null, "Connection Error!");
         }
         finally
         {
@@ -137,7 +219,7 @@ public class XMLBuilder {
         }
         catch (Exception ex)
         {
-           System.out.println("Error in getLocation: " + ex.getMessage());
+           JOptionPane.showMessageDialog(null, "Connection Error!");
         }
         finally
         {
