@@ -1,4 +1,4 @@
-package myweatherapp;
+package src;
 
 public class Forecast 
 {
@@ -46,5 +46,9 @@ public class Forecast
     {
         if(units == 'C' || units == 'c') return true;
         else return false;
+    }
+    
+    public enum WeatherType {
+        SUNNY, PARTLYCLOUDY, CLOUDY, RAINY, THUNDERSTORM, SNOW, FOG, NOTAVAILABLE
     }
 }
