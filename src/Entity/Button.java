@@ -39,6 +39,7 @@ public abstract class Button extends Render implements Updateable {
      * @params text: set the text on the button.
      */
     
+    
     public Button(String path,float x, float y, float scale, String text){
         super();
         try {
@@ -108,11 +109,7 @@ public abstract class Button extends Render implements Updateable {
         }
     }
     
-    @Override
-    public void reInit()
-    {
-        this.text.reInit();
-    }
+   
     //This inforces an action must be implemented for a button.
     //This is called when a button click and release occurs over the button.
     public abstract void action();

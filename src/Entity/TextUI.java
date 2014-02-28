@@ -31,30 +31,45 @@ public class TextUI extends Render
 {
     private static float goldenRatio = 1.525f;
     private String text;
-    private java.awt.Font font =new Font(Font.SERIF, Font.BOLD, 35);
-    private TrueTypeFont fontw;
+    private java.awt.Font font; //=new Font(Font.SERIF, Font.BOLD, 35);
+    protected TrueTypeFont fontw;
     private FontMetrics fm;
-    Render container;
-    public TextUI( String text)
+    private final float fontSizeRef;
+    private Render container;
+    
+    public TextUI( String text, int x, int y)
     {
-        super();
+        super(x,y);
         this.text = text;
         this.scale = 1.0f;
+        this.font = new Font(Font.SERIF, Font.BOLD, 35);
         this.fontw = new TrueTypeFont(font, true);
+        this.fontSizeRef = this.font.getSize();
+    }
+    
+    public TextUI( String text, int x, int y, Font font)
+    {
+        super(x,y);
+        this.text = text;
+        this.scale = 1.0f;
+        this.font = font;
+        this.fontw = new TrueTypeFont(font, true);
+        this.fontSizeRef = this.font.getSize();
     }
     public TextUI(Render container, String text)
     {
-        this(text);
+        this(text, 0 ,0, new Font(Font.SERIF, Font.BOLD, 35));
         this.container = container;
     }
     public TextUI(Render container, String text, Font font)
     {
-        this(text);
+        this(text,0 ,0, new Font(Font.SERIF, Font.BOLD, 35));
         this.container = container;
         this.font = font;
     }
     public void render(org.newdawn.slick.Graphics g)
     {
+        //If it has a container, it draws it relative to its center.
         if(this.container != null)
         {
             int textWidth = fontw.getWidth(this.text);
@@ -79,19 +94,30 @@ public class TextUI extends Render
         else
         {
             fontw.drawString(this.getX(), this.getY(),this.text);
+            if(DEBUG)
+            {
+                g.drawRect(this.getX(), this.getY(), 
+                      this.fontw.getWidth(text), this.fontw.getHeight(text));
+            }
+            
         }
     }
     
-    
+    public void setText(String s)
+    {
+        this.text = s;
+    }
     
     @Override
     public void reInit()
     {
+       System.out.println(this.text);
        System.out.println("size"+font.getSize());
-       float fontsizeF = (float) font.getSize();
-       int newfontSize =(int) (this.getScale()*fontsizeF*goldenRatio);
+       int newfontSize =(int) Math.ceil(this.getScale()* fontSizeRef);
     
        this.font = new Font(font.getName(),font.getStyle(), newfontSize);
        this.fontw = new TrueTypeFont(font, false);
+       
+       
     }
 }

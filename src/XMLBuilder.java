@@ -1,4 +1,4 @@
-package myweatherapp;
+package src;
 
 import org.w3c.dom.Document;
 import java.io.IOException;
@@ -19,7 +19,11 @@ public class XMLBuilder {
     {
         //Forecast weatherData  = getForecast(getLocation("London"), true);
         //System.out.println(weatherData.getWeatherToday());
-        getLocation("London");
+        ArrayList<String[]> locs = getLocation("London");
+        int idLoc = Integer.parseInt(locs.get(0)[0]);
+        Forecast fc = getForecast(idLoc, true);
+        System.out.println(fc.getWeatherToday());
+        
     }
     
     public static Forecast getForecast(int location, boolean celsius)
@@ -109,7 +113,7 @@ public class XMLBuilder {
         String url = "http://query.yahooapis.com/v1/public/yql?q=select+*+from+geo.places+where+text+=+";
         url += "'" + name + "'";
         
-        ArrayList<String[]> locations = new ArrayList<String[]>();
+        ArrayList locations = new ArrayList<String[]>();
         
         InputStream inputXml = null;
         

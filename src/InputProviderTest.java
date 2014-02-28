@@ -1,4 +1,4 @@
-package weatherapp;
+package src;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -9,7 +9,7 @@ package weatherapp;
 
 
 
-import weatherapp.*;
+import src.*;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;

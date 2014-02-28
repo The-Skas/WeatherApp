@@ -67,12 +67,16 @@ public abstract class Render {
              entities = new ArrayList<>();
          }
      }
-     public Render(float x, float y, String imgPATH)
+     public Render(float x, float y)
      {
          this();
          this.x = x;
          this.y = y;
          this.scale = 1.0f;
+     }
+     public Render(float x, float y, String imgPATH)
+     {
+         this(x,y);
          LoadImg(imgPATH);
      }
      

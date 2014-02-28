@@ -1,4 +1,4 @@
-package myweatherapp;
+package src;
 
 import com.googlecode.javacv.FrameGrabber;
 import com.googlecode.javacv.OpenCVFrameGrabber;
