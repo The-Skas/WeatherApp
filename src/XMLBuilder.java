@@ -141,7 +141,7 @@ public class XMLBuilder {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(inputXml);
-            NodeList nodi = doc.getElementsByTagName("yweather:forecast");
+            NodeList nodi = doc.getElementsByTagName("yweather:forecbast");
 
             for(int i = 0; i < nodi.getLength(); i++)
             {
@@ -163,7 +163,7 @@ public class XMLBuilder {
             node = (Element) nodi.item(0);
             
             String visibilityTemp = node.getAttribute("visibility");
-            if(visibilityTemp.isEmpty())
+            if(visibilityTemp.isEmpty())    
             {
                 visibility = -1;
             }
@@ -190,6 +190,7 @@ public class XMLBuilder {
         catch (Exception ex)
         {
            JOptionPane.showMessageDialog(null, "Connection Error! in getForecast");
+
         }
         finally
         {

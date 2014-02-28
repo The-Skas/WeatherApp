@@ -9,6 +9,7 @@ import java.util.ArrayList;
 */
 
 
+
 public class Forecast 
 {
     private double windspeed;

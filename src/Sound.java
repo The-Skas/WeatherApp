@@ -17,6 +17,9 @@ public class Sound
     private static int current_ms = 0;
     private static int pitchValue;
     private static SamplePlayer player;
+
+
+    
     public static void play(int pitch, int code)
     {
         String file;
@@ -40,7 +43,6 @@ public class Sound
             case 7: file = "res/sounds/creakv2.wav";
                     break;
             default: file = "res/sounds/xylo.wav";
-                     break;
         }
 	
         AudioContext audioContext = new AudioContext();
@@ -49,6 +51,7 @@ public class Sound
         Sample sample = SampleManager.sample(file);
         System.out.println(sample);
         player= new SamplePlayer(audioContext, sample);
+
         
         //Clock
         final Clock clock = new Clock(audioContext, 1000);
@@ -69,6 +72,7 @@ public class Sound
         
         audioContext.start();
         player.setKillListener(new KillTrigger(gain));  
+
     }
     
     /*
