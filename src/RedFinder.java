@@ -13,9 +13,12 @@ public class RedFinder
 {      
     static OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
     static IplImage frame;
-    static int height;
-    static int width;
-    
+    static int cameraResolutionY;
+    static int cameraResolutionX;
+    //cameraX Resolution to calculate relative to.
+    static float scaleX = 1.0f;
+    static final float DEFAULT_SIZE = 1280;// the ITL camera resolution
+    static int [] coordinates = {-1,-1};
     
     public static void main(String[] args)
     {
@@ -28,7 +31,19 @@ public class RedFinder
             JOptionPane.showMessageDialog(null, "No camera detected!");
         }
     }
+    public static float getX()
+    {
+        return coordinates[0] * getScaleX();
+    }
     
+    public static int getY()
+    {
+        return coordinates[1];
+    }
+    private static float getScaleX()
+    {
+        return (DEFAULT_SIZE/cameraResolutionX);
+    }
     public static boolean initializeCamera()
     {
         boolean done = false;
@@ -44,10 +59,10 @@ public class RedFinder
                 grabber.start();
                 frame = grabber.grab();
                 CvSize size = cvGetSize(frame);
-                height = size.height();
-                width = size.width();
-                
-                System.out.println("h: " + height + " w: " + width);
+                cameraResolutionX = size.height();
+                cameraResolutionY = size.width();
+
+             
                 done = true;
             } 
             catch(FrameGrabber.Exception ex) 
@@ -114,11 +129,10 @@ public class RedFinder
         return imgThresh;
     }
     
-    private static int[] trackObject(IplImage imgThresh)
+    private static void trackObject(IplImage imgThresh)
     {
         int posX = 0;
         int posY = 0;
-        int[] coordinates = {-1,-1};
         
         CvMoments moments = new CvMoments();
         cvMoments(imgThresh, moments, 1);
@@ -132,9 +146,8 @@ public class RedFinder
             posX = (int) (momX10 / area);
             posY = (int) (momY01 / area);
             
-            coordinates[0] = posX;
-            coordinates[1] = posY;
+            RedFinder.coordinates[0] = posX;
+            RedFinder.coordinates[1] = posY;
         }
-        return coordinates;  
     }
 }

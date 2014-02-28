@@ -6,7 +6,6 @@
 
 package src.Entity;
 
-import org.newdawn.slick.Graphics;
 import src.MouseW;
 
 

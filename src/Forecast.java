@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * the 7 ButtonTabs, each of them will contain a Forecast object.
 */
 
+
 public class Forecast 
 {
     private double windspeed;
@@ -79,10 +80,21 @@ public class Forecast
     {
         String s = "TEMPRATURE: "+getWeatherToday() + "\n";
         s +=       "WIND SPEED: "+getWindSpeed()    + "\n";
+        s +=     "ALL OTHER DAYS \n";
+        
+        for(int i = 0; i < this.fiveDays.length; i++)
+        {
+            for(int j = 0; j< this.fiveDays[i].length; j++)
+            {
+                s+=" "+this.fiveDays[i][j];
+            }
+            s+="\n";
+        }
         return s;
     }
     
+    
     public enum WeatherType {
-        SUNNY,PARTLYCLOUDY, CLOUDY, RAINY, THUNDERSTORM, SNOW, FOG, 
+        SUNNY, PARTLYCLOUDY, CLOUDY, RAINY, THUNDERSTORM, SNOW, FOG, NOTAVAILABLE
     }
 }
