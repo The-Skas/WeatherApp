@@ -9,6 +9,7 @@ package src.Entity;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import src.Forecast;
+import src.Forecast.WeatherInfo;
 import static src.XMLBuilder.getLocation;
 
 
@@ -25,9 +26,12 @@ public class ButtonTab extends Button {
     private static final String imgPATH = "tab.png";
     private static ArrayList<ButtonTab> tabList = new ArrayList<>();
     public static ButtonTab activeButton;
+    
+    public static int SELECTED_IND = 0;
+    private static int DAY = 0;
     //determines if a button is Selected;
     private boolean isSelected = false;
-    protected Forecast fc;
+    private int day_i;
     public ButtonTab(float x, float y, String text) {
         super(imgPATH, x, y, 1.0f, text);
         this.scale = 0.95f;
@@ -38,13 +42,12 @@ public class ButtonTab extends Button {
             ButtonTab.activeButton = this;
             this.isSelected = true;
         }
+        
+        this.day_i = DAY;
+        DAY++;
+        
     }
     
-    public ButtonTab(float x, float y, String text, Forecast fc)
-    {
-      this(x,y,text);
-      this.fc = fc;
-    }
     
     @Override
     public void update(int delta)
@@ -69,18 +72,15 @@ public class ButtonTab extends Button {
         {
             this.color = new Color(0,0,0,255);
         }
+        
+        //Set Text for button
+        String [][] fiveDays = Forecast.current.getFiveDays();
+        String weather = fiveDays[day_i][WeatherInfo.DATE.ordinal()];
+        String [] format = weather.split(" ");
+        this.text.setText(format[0]+" "+format[1]);
     }
     
-    public Forecast getForecast()
-    {
-        return this.fc;
-    }
-    
-    public void setForecast(Forecast fc)
-    {
-        this.fc = fc;
-    }
-    
+   
     public void action() 
     {
         this.color = new Color(Color.black);
@@ -88,9 +88,8 @@ public class ButtonTab extends Button {
         
         ButtonTab.activeButton.isSelected = false; 
         ButtonTab.activeButton = this;
-        ArrayList<String[]> locs = getLocation("London");
-        int idLoc = Integer.parseInt(locs.get(0)[0]);
         
-        ArrayList<Forecast> fcs = new ArrayList<>();
+        ButtonTab.SELECTED_IND = this.day_i;
+        //This play
     }
 }

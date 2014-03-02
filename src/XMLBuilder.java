@@ -36,10 +36,11 @@ public class XMLBuilder {
         if(locs.isEmpty())
             return null;
         int idLoc = Integer.parseInt(locs.get(0)[0]);
-        return getForecast(idLoc, false);
+        Forecast.current = getForecast(idLoc, Forecast.isCelsius);
+        return Forecast.current;
     }
     //Translates Yahoo weather code into a smaller set
-    private static String codeTranslator(String inputCode)
+    public static String codeTranslator(String inputCode)
     {
         int code = Integer.parseInt(inputCode);
         int outputCode;
@@ -141,7 +142,7 @@ public class XMLBuilder {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(inputXml);
-            NodeList nodi = doc.getElementsByTagName("yweather:forecbast");
+            NodeList nodi = doc.getElementsByTagName("yweather:forecast");
 
             for(int i = 0; i < nodi.getLength(); i++)
             {

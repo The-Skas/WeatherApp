@@ -28,9 +28,9 @@ public class Sun extends Render implements Updateable {
             this.img = new Image("res/sun.png");
             this.img.setFilter(Image.FILTER_LINEAR);
             this.rot = img.getRotation();
-            this.x = x;
-            this.y = y;
-            this.scale = scale;
+            this.x = Render.screenWidth/2.0f;
+            this.y = 100;
+            this.scale = 0.5f;
 //            img.setCenterOfRotation(((float)img.getWidth())*scale, ((float)img.getHeight())*scale);
             img.setCenterOfRotation(50,50);
             

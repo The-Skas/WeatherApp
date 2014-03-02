@@ -12,6 +12,9 @@ import src.Forecast;
 import static src.XMLBuilder.getForecast;
 import static src.XMLBuilder.getLocation;
 import org.newdawn.slick.Graphics;
+import src.Forecast.WeatherInfo;
+import src.Forecast.WeatherType;
+import src.XMLBuilder;
 
 /**
  *
@@ -20,7 +23,7 @@ import org.newdawn.slick.Graphics;
 public class BottomUI extends Render implements Updateable
 {
     private final static String path = "UI.png";
-    private final int MAX_BUTTONS = 7;
+    private final int MAX_BUTTONS = 5;
     
     private TextUI tempratureText;
     private TextUI windSpeedText;
@@ -34,13 +37,10 @@ public class BottomUI extends Render implements Updateable
     {
         //Adds to entity list.
         super(x,y, path);
+        new WeatherTypeUI(x,y);
         
-        ArrayList<String[]> locs = getLocation("London");
-        int idLoc = Integer.parseInt(locs.get(0)[0]);
-        
-        ArrayList<Forecast> fcs = new ArrayList<>();
-        for(int i = 0; i < MAX_BUTTONS; i++)
-           fcs.add(getForecast(idLoc, true));
+
+        XMLBuilder.getForecastOfSearch("London");
         //Construct lower tabs.
         float quarterScreen = Render.screenWidth/4;
         float spanByMAX = (Render.screenWidth-quarterScreen)/MAX_BUTTONS;
@@ -48,7 +48,7 @@ public class BottomUI extends Render implements Updateable
         {
             //Additionally, each button should store the state of the weather.
             new ButtonTab(
-                quarterScreen-10 + spanByMAX*i,185+this.getY(),"Feb 27", fcs.get(i)
+                quarterScreen-10 + spanByMAX*i,185+this.getY(),"Feb 27"
             );
         }
         
@@ -56,8 +56,6 @@ public class BottomUI extends Render implements Updateable
         float yTemprature = 220/3.0f + this.getY();
         tempratureText = new TextUI("33",(int)quarterScreen,(int) yTemprature,
                             new Font(Font.SERIF, Font.BOLD, 70));
-        ButtonTab.activeButton.fc.setTempratureToday(58);
-        tempratureText.setText(""+ButtonTab.activeButton.fc.getWeatherToday());
         
         int infoX = Render.screenWidth*2/3;
         int infoY = (int)this.y+15;
@@ -73,8 +71,15 @@ public class BottomUI extends Render implements Updateable
     @Override
     public void update(int delta)
     {
-        tempratureText.setText(""+ButtonTab.activeButton.fc.getWeatherToday()
-                             +""+ButtonTab.activeButton.fc.getUnits()+"/32C");
+        WeatherInfo inf = null;
+        int i = ButtonTab.SELECTED_IND;
+        tempratureText.setText(""+Forecast.current.getFiveDays()[i][WeatherInfo.HI.ordinal()]
+                              +""+Forecast.current.getUnits()+" / "
+                              +""+Forecast.current.getFiveDays()[i][WeatherInfo.LOW.ordinal()]
+                              +""+Forecast.current.getUnits());
+        
+        String code = Forecast.current.getFiveDays()[i][WeatherInfo.CODE.ordinal()];
+        int weatherType = Integer.parseInt(code);
         
     }
     

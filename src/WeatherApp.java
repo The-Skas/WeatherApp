@@ -65,7 +65,7 @@ public class WeatherApp extends BasicGame {
                 }
             });
             this.searchField.setFocus(true);
-            new Sun(500, 200, 1.0f);
+            new WeatherGroup();
             
             //DrawBottomUI
             new BottomUI(-2, 520);

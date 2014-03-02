@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 public class Forecast 
 {
+    public static Forecast current;
+    public static boolean isCelsius = true;
     private double windspeed;
     private double visibility;
     private String[][] fiveDays = new String[5][5];
@@ -29,6 +31,13 @@ public class Forecast
     public Forecast()
     {
         
+    }
+    
+    public static int getWeatherTypeOfDay(int day)
+    {
+        String typeStr=Forecast.current.getFiveDays()[day][WeatherInfo.CODE.ordinal()];
+        int type = Integer.parseInt(typeStr);
+        return type;
     }
     
     public void setValues(double ws, double v, String[][] fd, int wt, char u)
@@ -97,5 +106,8 @@ public class Forecast
     
     public enum WeatherType {
         SUNNY, PARTLYCLOUDY, CLOUDY, RAINY, THUNDERSTORM, SNOW, FOG, NOTAVAILABLE
+    }
+    public enum WeatherInfo {
+        DAY,DATE,LOW, HI, CODE
     }
 }
