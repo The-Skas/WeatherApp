@@ -6,10 +6,66 @@
 
 package src.Entity;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import src.Forecast;
+
 /**
  *
  * @author skas
  */
-public class WeatherTypeUI {
+public class WeatherTypeUI extends Render implements Updateable 
+{
+    private static final String PATH = "UIType.png";
+    private Image [] weatherTypeImgs = new Image[5];
+    
+    private int CURR_IMG = 0;
+    
+    private float imgwScale = 1.0f;
+    private float yOffset;
+    private float xOffset;
+    
+    public WeatherTypeUI(float x, float y)
+    {
+        super(x,y,PATH);
+        this.imgwScale = 0.3f;
+        this.xOffset = 60;
+        this.yOffset = 50;
+        
+        for(int i = 0; i < weatherTypeImgs.length; i++)
+        {
+            try {
+                weatherTypeImgs[i] = new Image("res/weatherIcons/"+i+".png");
+            } catch (SlickException ex) {
+                Logger.getLogger(WeatherTypeUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public float getYOffset()
+    {
+        return this.yOffset * this.getHeightScreenScale() + this.getY();
+    }
+    
+    public float getXOffset()
+    {
+        return this.xOffset * this.getWidthScreenScale()  + this.getX();
+    }
+            
+    
+    @Override
+    public void render(org.newdawn.slick.Graphics g)
+    {
+        super.render(g);
+        
+        this.weatherTypeImgs[CURR_IMG].draw(getXOffset(), getYOffset(), this.getScale()*this.imgwScale);
+    }
+    @Override
+    public void update(int delta) {
+        //Render current buttons img
+        CURR_IMG = Forecast.getWeatherTypeOfDay(ButtonTab.SELECTED_IND);
+    }
     
 }
