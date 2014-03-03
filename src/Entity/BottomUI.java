@@ -39,7 +39,7 @@ public class BottomUI extends Render implements Updateable
         super(x,y, path);
         new WeatherTypeUI(x,y);
         
-
+        //cant be threaded since application needs a first location.
         XMLBuilder.getForecastOfSearch("London");
         //Construct lower tabs.
         float quarterScreen = Render.screenWidth/4;

@@ -57,12 +57,11 @@ public class WeatherApp extends BasicGame {
             this.searchField = new TextField(gc , uFont, 0 , 0 , 200 , 35, new ComponentListener() {
                 public void componentActivated(AbstractComponent ac) {
                     System.out.println("Hey TextField here!");
-                    Forecast fc=XMLBuilder.getForecastOfSearch(searchField.getText());
-                    
-                    
-                    if(fc != null) {
-                        System.out.println(fc);
-                    }
+                    String s = searchField.getText();
+                    ThreadSearch threadSearch = new ThreadSearch(s);
+                    Thread t = new Thread(threadSearch);
+                    t.start();
+                  
                 }
             });
             this.searchField.setBackgroundColor(Color.gray);
