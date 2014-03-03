@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import quicktime.sound.Sound;
 import src.Forecast;
 
 /**
@@ -20,13 +21,14 @@ public class WeatherTypeUI extends Render implements Updateable
 {
     private static final String PATH = "UIType.png";
     private Image [] weatherTypeImgs = new Image[5];
+    private int lastInd = 0;
     
-    private int CURR_IMG = 0;
+    public static int CURR_TYPE = 0;
     
     private float imgwScale = 1.0f;
     private float yOffset;
     private float xOffset;
-    
+   
     public WeatherTypeUI(float x, float y)
     {
         super(x,y,PATH);
@@ -60,12 +62,18 @@ public class WeatherTypeUI extends Render implements Updateable
     {
         super.render(g);
         
-        this.weatherTypeImgs[CURR_IMG].draw(getXOffset(), getYOffset(), this.getScale()*this.imgwScale);
+        this.weatherTypeImgs[CURR_TYPE].draw(getXOffset(), getYOffset(), this.getScale()*this.imgwScale);
     }
     @Override
     public void update(int delta) {
         //Render current buttons img
-        CURR_IMG = Forecast.getWeatherTypeOfDay(ButtonTab.SELECTED_IND);
+        CURR_TYPE = Forecast.getWeatherTypeOfDay(ButtonTab.SELECTED_IND);
+        
+        if(ButtonTab.SELECTED_IND != this.lastInd)
+        {
+            src.Sound.play(0, CURR_TYPE);
+            this.lastInd=ButtonTab.SELECTED_IND;
+        }
     }
     
 }

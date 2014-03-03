@@ -6,7 +6,7 @@ import net.beadsproject.beads.events.*;
 import net.beadsproject.beads.ugens.*;
 import net.beadsproject.beads.data.*;
 
-public class Sound 
+public class Sound
 {   
     public static void main(String args[]){
         final File f = new File(Sound.class.getProtectionDomain().getCodeSource().getLocation().getPath());
@@ -63,7 +63,7 @@ public class Sound
         playbackRate = semitoneRatio(440, Sound.pitchValue);
         player.getPitchUGen().setValue(playbackRate);
 
-        player.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
+//        player.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
         
         //Gain
         Gain gain = new Gain(audioContext, 1, 1.0f);
@@ -99,13 +99,13 @@ public class Sound
     {
         if(current_ms > 100)
         {
-            System.out.println("ok in");
-            current_ms = 0;
-            float playbackRate;
-            Sound.pitchValue += 1;
-            playbackRate = semitoneRatio(440, Sound.pitchValue);
-            player.getPitchUGen().setValue(playbackRate);
-            System.out.println("ok out");
+//            System.out.println("ok in");
+//            current_ms = 0;
+//            float playbackRate;
+//            Sound.pitchValue += 1;
+//            playbackRate = semitoneRatio(440, Sound.pitchValue);
+//            player.getPitchUGen().setValue(playbackRate);
+//            System.out.println("ok out");
         }
         else
         {

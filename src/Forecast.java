@@ -39,7 +39,7 @@ public class Forecast
         int type = Integer.parseInt(typeStr);
         return type;
     }
-    
+        
     public void setValues(double ws, double v, String[][] fd, int wt, char u)
     {
         windspeed = ws;
