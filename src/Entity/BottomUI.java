@@ -48,7 +48,7 @@ public class BottomUI extends Render implements Updateable
         {
             //Additionally, each button should store the state of the weather.
             new ButtonTab(
-                quarterScreen + spanByMAX*i,185+this.getY(),"Feb 27"
+                30+quarterScreen + spanByMAX*i,185+this.getY(),"Feb 27"
             );
         }
         
@@ -56,17 +56,17 @@ public class BottomUI extends Render implements Updateable
         float yTemprature = 220/3.0f + this.getY();
         tempratureText = new TextUI("33",(int)quarterScreen,(int) yTemprature,
                             new Font(Font.SERIF, Font.BOLD, 70));
-        tempratureText.x = Render.screenWidth*1/3;
+        tempratureText.x = Render.screenWidth*1.0f/2.0f;
         
         int infoX = Render.screenWidth*2/3;
         int infoY = (int)this.y+15;
         
         int infoDiffY = 185/3;
-        windSpeedText = new TextUI("wind",infoX, infoY);
-        //add icon
-        percipText = new TextUI("Percip",infoX, infoY+infoDiffY*1);
-        //add icon
-        humidText  = new TextUI("Humid", infoX, infoY+infoDiffY*2);
+//        windSpeedText = new TextUI("wind",infoX, infoY);
+//        //add icon
+//        percipText = new TextUI("Percip",infoX, infoY+infoDiffY*1);
+//        //add icon
+//        humidText  = new TextUI("Humid", infoX, infoY+infoDiffY*2);
     }
     
     @Override

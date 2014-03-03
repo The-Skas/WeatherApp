@@ -20,14 +20,14 @@ public class Lightning extends Render implements Updateable {
     private Color color = new Color(255,255,255,0);
     public Lightning()
     {
-        super(400,150,PATH);
+        super(450,150,PATH);
         this.scale = 0.5f;
         this.color.a =0;
     }
     public void update(int delta) {
         if(current_ms > ONE_SECOND * 5)
         {
-            this.x =(float)(400+ Math.random() * 200 - 100);
+            this.x =(float)(450+ Math.random() * 100 - 50);
             this.current_ms = 0;
             this.color.a = 1.0f;
             Sound.play(0, 4);

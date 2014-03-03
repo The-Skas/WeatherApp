@@ -45,6 +45,8 @@ public class WeatherApp extends BasicGame {
                 
 	}
 	public void init(GameContainer gc) throws SlickException {
+            //hide FPS
+            gc.setShowFPS(false);
             entities = new ArrayList<>();
             Render.entities = entities;
             Render.screenWidth = 1024;
@@ -140,13 +142,11 @@ public class WeatherApp extends BasicGame {
 	}
         
 	public static void main(String[] args) {
-                    final File f = new File(WeatherApp.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-                    System.out.println(f);
-//                    Sound.play(0, 7);
+                   
                     
 		try {
 			AppGameContainer appgc;
-			appgc = new AppGameContainer(new WeatherApp("Simple Slick Game"));
+			appgc = new AppGameContainer(new WeatherApp("Weather App"));
 			appgc.setDisplayMode(1024, 768, false);
                         appgc.setVSync(false);
 			appgc.start();
