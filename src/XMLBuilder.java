@@ -4,7 +4,10 @@ import org.w3c.dom.Document;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
@@ -22,13 +25,21 @@ public class XMLBuilder {
         ArrayList<String[]> locs = getLocation("London");
         int idLoc = Integer.parseInt(locs.get(0)[0]);
         Forecast fc = getForecast(idLoc, true);
-        System.out.println(fc.getWeatherToday());
+        //System.out.println(fc.getWeatherToday());
         
         //getLocation("London");
-        for(int i =0; i < 48; i++)
+        
+        /* DEBUG: PRINTS OUTPUT OF FIVEDAYS ARRAYS
+        for(int i = 0; i < fc.getFiveDays().length; i++)
         {
-            System.out.println(i + "= " + codeTranslator(Integer.toString(i)));
+            System.out.println("i: "+i);
+            for(int j = 0; j < fc.getFiveDays().length; j++)
+            {
+                System.out.println("j: "+j+" = "+fc.getFiveDays()[i][j]);
+            }
+            System.out.println();
         }
+        */
     }
     public static Forecast getForecastOfSearch(String location)
     {
@@ -148,7 +159,9 @@ public class XMLBuilder {
             {
                 Element node = (Element) nodi.item(i);
                 fiveDays[i][0] = node.getAttribute("day");
-                fiveDays[i][1] = node.getAttribute("date");
+                Date date = new SimpleDateFormat("d MMM yyyy").parse(node.getAttribute("date"));
+                Format formatter = new SimpleDateFormat("EEE d");
+                fiveDays[i][1] = formatter.format(date);
                 fiveDays[i][2] = node.getAttribute("low");
                 fiveDays[i][3] = node.getAttribute("high");
                 fiveDays[i][4] = codeTranslator(node.getAttribute("code"));
@@ -157,12 +170,20 @@ public class XMLBuilder {
             //Wind speed
             nodi = doc.getElementsByTagName("yweather:wind");
             Element node = (Element) nodi.item(0);
-            windspeed = Double.parseDouble(node.getAttribute("speed"));
+            String inputWindSpeed = node.getAttribute("speed");
+            if(inputWindSpeed.isEmpty())
+            {
+                windspeed = -1;
+            }
+            else
+            {
+                windspeed = Double.parseDouble(inputWindSpeed);
+            }
+            
             
             //Visibility
             nodi = doc.getElementsByTagName("yweather:atmosphere");
             node = (Element) nodi.item(0);
-            
             String visibilityTemp = node.getAttribute("visibility");
             if(visibilityTemp.isEmpty())    
             {
@@ -176,7 +197,15 @@ public class XMLBuilder {
             //weather Today code
             nodi = doc.getElementsByTagName("yweather:condition");
             node = (Element) nodi.item(0);
-            weatherToday = Integer.parseInt(codeTranslator(node.getAttribute("code")));
+            String WTCode = node.getAttribute("code");
+            if(WTCode.isEmpty())
+            {
+                weatherToday = -1;
+            }
+            else
+            {
+                weatherToday = Integer.parseInt(codeTranslator(WTCode));
+            }
             
             //units of measurement
             nodi = doc.getElementsByTagName("yweather:units");
