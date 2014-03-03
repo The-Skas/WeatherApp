@@ -14,8 +14,10 @@ import java.util.ArrayList;
  */
 public class CloudEmitter extends Render implements Updateable
 {
-    private final int emiteRate = 1500;
-    private int timeToEmit = 0;
+    private final static int DEFAULT_EMIT = 1500;
+    private int emitRate = DEFAULT_EMIT;
+    private int timeToEmit = emitRate;
+    private float min_alpha = 0.0f;
     private ArrayList<Cloud> clouds = new ArrayList<Cloud>();
     private float cloudColor;
     public CloudEmitter(float colorf)
@@ -24,13 +26,20 @@ public class CloudEmitter extends Render implements Updateable
         super();
         this.cloudColor = colorf;
     }
+    public CloudEmitter(float colorf, int rate, float min_alpha)
+    {
+        this(colorf);
+        this.emitRate = rate;
+        this.timeToEmit = rate;
+        this.min_alpha = min_alpha;
+    }
     @Override
     public void update(int delta) 
     {
-        if(timeToEmit >= emiteRate)
+        if(timeToEmit >= emitRate)
         {
             timeToEmit = 0;
-            this.clouds.add(new Cloud(cloudColor, this));
+            this.clouds.add(new Cloud(cloudColor,this.min_alpha, this));
         }
         else
         {
@@ -41,10 +50,26 @@ public class CloudEmitter extends Render implements Updateable
     @Override
     public void render(org.newdawn.slick.Graphics g)
     {
+      
     }
     
-    public void remove(Cloud c)
+    public void destroyCloud(Cloud c)
     {
         this.clouds.remove(c);
+    }
+    
+    /**
+     * Over rides the destroy from base class Render.
+     * Otherwise, the object cant remove all refrences to its variable arraylist.
+     */
+    @Override
+    public void destroy()
+    {
+        for(int i = 0; i<clouds.size(); i++)
+        {
+            clouds.get(i).destroy();
+        }
+        //destroy itself
+        super.destroy();
     }
 }

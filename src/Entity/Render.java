@@ -53,6 +53,10 @@ public abstract class Render {
      {
          return (getWidthScreenScale()+getHeightScreenScale())/2.0f;
      }
+     public Render(boolean t)
+     {
+         //do nothing
+     }
      public Render()
      {
          if(this.scale <= 0)

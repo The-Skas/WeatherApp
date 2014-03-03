@@ -7,30 +7,32 @@
 package src.Entity.State;
 
 import src.Entity.CloudEmitter;
+import src.Entity.SnowEmitter;
 import src.Entity.WeatherState;
 
 /**
  *
  * @author skas
  */
-public class Cloudy extends State<WeatherState>{
+public class Snowy extends State<WeatherState>{
 
     private int rate = 1500;
     private float color = 1.0f;
     private float min_alpha = 0.0f;
-    public Cloudy(int rate, float color, float min_alpha)
+    public Snowy(int rate, float color, float min_alpha)
     {
         this.rate = rate;
         this.color = color;
         this.min_alpha = min_alpha;
     }
 
-    public Cloudy() {
+    public Snowy() {
     }
     @Override
     public void enter(WeatherState obj) {
         //obj.weatherEntities should be empty
         obj.weatherEntities.add(new CloudEmitter(color, rate, min_alpha));
+        obj.weatherEntities.add(new SnowEmitter());
     }
 
     @Override

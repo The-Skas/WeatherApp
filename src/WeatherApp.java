@@ -120,7 +120,7 @@ public class WeatherApp extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException 
         {
-           g.setBackground(Color.gray);
+           g.setBackground(Color.black);
            for(int i = 0; i < entities.size();i++)
            {
                

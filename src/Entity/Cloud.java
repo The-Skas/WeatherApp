@@ -38,10 +38,10 @@ public class Cloud extends Render implements Updateable
     //TTL
     private float TTL = 3000;
     
-    private CloudEmitter parent;
+    private CloudEmitter emitter;
     public Cloud(float color)
     {
-       super(400,200,PATH);
+       super(400,150,PATH);
        
        this.color.r = color;
        this.color.g = color;
@@ -59,16 +59,16 @@ public class Cloud extends Render implements Updateable
     }
     
     //random                                /emitter
-    public Cloud(float color, CloudEmitter parent)
+    public Cloud(float color,float alpha, CloudEmitter emitter)
     {
         this(color);
         //Sets to 0.5-1.0f max
-        this.max_alpha *= Math.random();
+        this.max_alpha *= Math.random() + alpha;
         this.changeRate*= Math.random()*3.0f +1.0f;
         this.y += Math.random()*50.0f - 25.0f;
-        this.x += Math.random()*100.0f - 50f;
+        this.x -= 50;
         this.vX*= Math.random()*0.25f + 1.0f;
-        this.parent = parent;
+        this.emitter = emitter;
     }
     public void render(org.newdawn.slick.Graphics g)
     {
@@ -81,7 +81,7 @@ public class Cloud extends Render implements Updateable
         if(this.state == State.ENTER)
         {
 //            System.out.println("CLOUD ENTERING");
-            this.color.a += ((float) delta) * changeRate;
+            this.color.a += ((float) delta) * changeRate * this.max_alpha;
             if(this.color.a >= this.max_alpha)
             {
                 this.state = State.EXECUTE;
@@ -92,10 +92,10 @@ public class Cloud extends Render implements Updateable
             if(this.color.a <= 0)
             {
                 this.destroy();
-                this.parent.remove(this);
-                //remove from parent
+                this.emitter.destroyCloud(this);
+                //remove from emitter
             }
-            this.color.a -= ((float) delta) * changeRate;
+            this.color.a -= ((float) delta) * changeRate * this.max_alpha;
         }
         else if(this.state == State.EXECUTE)
         {

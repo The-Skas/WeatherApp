@@ -10,12 +10,6 @@ package src.Entity.State;
  *
  * @author skas
  */
-public abstract class State<T> 
-{
-    public abstract void enter(T obj);
-    
-    public abstract void execute(T obj);
-    
-    public abstract void exit(T obj);
+public class Foggy {
     
 }
