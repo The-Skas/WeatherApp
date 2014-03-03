@@ -70,13 +70,12 @@ public class Sun extends Render implements Updateable {
     public void render(Graphics g)
     {
         super.render(g);
-         g.drawString("Howdy!", 30, 30);
          //This centerOfRotation Has to be set everyupdate;
 //        img.setCenterOfRotation(this.getWidth()/2,this.getHeight()/2);
         this.img.draw(getX(),getY(), this.getScale(), this.color);
         
         //This is to check if the mouse is over the sun.
-        this.isHitRadius(MouseW.getX(), MouseW.getY());
+       
        
         
       

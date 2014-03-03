@@ -53,6 +53,7 @@ public class WeatherApp extends BasicGame {
             float midY = 768.0f;
             Font tFont =new Font(java.awt.Font.SERIF, java.awt.Font.BOLD, 35);
             TrueTypeFont uFont = new TrueTypeFont(tFont, true);
+            
             this.searchField = new TextField(gc , uFont, 0 , 0 , 200 , 35, new ComponentListener() {
                 public void componentActivated(AbstractComponent ac) {
                     System.out.println("Hey TextField here!");
@@ -64,7 +65,7 @@ public class WeatherApp extends BasicGame {
                     }
                 }
             });
-            this.searchField.setFocus(true);
+            this.searchField.setBackgroundColor(Color.gray);
             new WeatherGroup();
             
             //DrawBottomUI
@@ -130,6 +131,8 @@ public class WeatherApp extends BasicGame {
            if(this.searchField != null)
            {
              this.searchField.render(container, g);
+            g.drawString("Location: "+Forecast.currentLocation, 0, 30);
+
            }
            else
            {

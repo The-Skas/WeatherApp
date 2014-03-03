@@ -16,18 +16,18 @@ import src.Sound;
 public class Lightning extends Render implements Updateable {
     public static final String PATH = "lightning.png";
     public static final int ONE_SECOND = 1000;
-    private int current_ms = 0;
+    private int current_ms = 5000;
     private Color color = new Color(255,255,255,0);
     public Lightning()
     {
-        super(500,150,PATH);
+        super(400,150,PATH);
         this.scale = 0.5f;
         this.color.a =0;
     }
     public void update(int delta) {
         if(current_ms > ONE_SECOND * 5)
         {
-            this.x =(float)(500+ Math.random() * 100 - 50);
+            this.x =(float)(400+ Math.random() * 200 - 100);
             this.current_ms = 0;
             this.color.a = 1.0f;
             Sound.play(0, 4);

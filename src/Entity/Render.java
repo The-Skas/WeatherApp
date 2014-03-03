@@ -24,7 +24,7 @@ import org.newdawn.slick.SlickException;
  * 
  */
 public abstract class Render {
-     public final boolean DEBUG = true;
+     public final boolean DEBUG = false;
     //This serves to refer to the arrayList of Entities on the screen.
      public static ArrayList<src.Entity.Render> entities;
      public static final float D_SCREENWIDTH  = 1024;
@@ -184,7 +184,8 @@ public abstract class Render {
      
      public void render(org.newdawn.slick.Graphics g)
      {
-         g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+         if(DEBUG)
+            g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
          this.img.draw(this.getX(), this.getY(), this.getScale());
      }
      

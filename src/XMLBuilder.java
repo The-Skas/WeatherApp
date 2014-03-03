@@ -47,6 +47,7 @@ public class XMLBuilder {
         if(locs.isEmpty())
             return null;
         int idLoc = Integer.parseInt(locs.get(0)[0]);
+        Forecast.currentLocation = locs.get(0)[1];
         Forecast.current = getForecast(idLoc, Forecast.isCelsius);
         return Forecast.current;
     }

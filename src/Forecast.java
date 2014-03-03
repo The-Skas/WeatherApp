@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class Forecast 
 {
+    public static String currentLocation = "London";
     public static Forecast current;
     public static boolean isCelsius = true;
     private double windspeed;
