@@ -5,20 +5,25 @@
  */
 
 package src;
+import org.newdawn.slick.gui.TextField;
 
 /**
  *
  * @author skas
  */
 public class ThreadSearch implements Runnable {
-    private String search;
-    public ThreadSearch(String searchQ)
+    private TextField search;
+    private String searchQ;
+    public ThreadSearch(TextField search)
     {
-        this.search = searchQ;
+        this.search = search;
+        this.searchQ = search.getText();
     }
     @Override
     public void run() {
-        XMLBuilder.getForecastOfSearch(search);
+        search.setText("Searching ...");
+        XMLBuilder.getForecastOfSearch(searchQ);
+        search.setText("");
     }
     
 }

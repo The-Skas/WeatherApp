@@ -60,7 +60,7 @@ public class WeatherApp extends BasicGame {
                 public void componentActivated(AbstractComponent ac) {
                     System.out.println("Hey TextField here!");
                     String s = searchField.getText();
-                    ThreadSearch threadSearch = new ThreadSearch(s);
+                    ThreadSearch threadSearch = new ThreadSearch(searchField);
                     Thread t = new Thread(threadSearch);
                     t.start();
                   
