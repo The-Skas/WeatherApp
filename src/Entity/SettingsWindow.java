@@ -68,6 +68,10 @@ public class SettingsWindow extends Render implements Updateable
     private SettingsWindow()
     {
         super(0,0,PATH);
+        //Is celcius
+        boolean isCelsius = Forecast.current.isCelsius();
+        boolean isLargeRes = (Render.screenWidth == 1024);
+        
         int yOff = -50;
         this.x = Render.screenWidth/2.0f - this.img.getWidth()/2.0f;
         this.y = 100;
@@ -89,17 +93,17 @@ public class SettingsWindow extends Render implements Updateable
         this.farenTxt.destroy();
         children.add(farenTxt);
         
-        this.celsTxt = new TextUI("Celsius",(int)quarterScreen + 350, 250 + yOff,
+        this.celsTxt = new TextUI("Celsius",(int)quarterScreen + 310, 250 + yOff,
                                         new Font("Verdana", Font.BOLD, 25));
         celsTxt.destroy();
         children.add(celsTxt);
         //Add buttons
-        farenheit=new ButtonToggle(quarterScreen+150, 200 + yOff, false);
+        farenheit=new ButtonToggle(quarterScreen+150, 200 + yOff, !isCelsius);
         farenheit.destroy();
         children.add(farenheit);
         Button.topButtons.add(farenheit);
         
-        celsius = new ButtonToggle(farenheit.x + 200, farenheit.y, true);
+        celsius = new ButtonToggle(farenheit.x + 200, farenheit.y, isCelsius);
         children.add(celsius);
         celsius.destroy();
         Button.topButtons.add(celsius);
@@ -113,18 +117,18 @@ public class SettingsWindow extends Render implements Updateable
         children.add(this.resSmallTxt);
         resSmallTxt.destroy();
         
-        this.resSmall = new ButtonToggle(quarterScreen+150, 400+yOff, true);
+        this.resSmall = new ButtonToggle(quarterScreen+150, 400+yOff, !isLargeRes);
         children.add(this.resSmall);
         Button.topButtons.add(resSmall);
         resSmall.destroy();
         
-        this.resLargeTxt = new TextUI("1024X768",(int)quarterScreen + 350, 450 + yOff,
+        this.resLargeTxt = new TextUI("1024X768", (int) (this.resSmall.x + 140), 450 + yOff,
                                         new Font("Verdana", Font.BOLD, 25));
         children.add(this.resLargeTxt);
         resLargeTxt.destroy();
 
         
-        this.resLarge =    new ButtonToggle(this.resSmall.x+200, resSmall.y, false);
+        this.resLarge =    new ButtonToggle(this.resSmall.x+200, resSmall.y, isLargeRes);
         children.add(this.resLarge);
         Button.topButtons.add(resLarge);
         resLarge.destroy();

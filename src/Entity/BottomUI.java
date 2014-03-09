@@ -61,7 +61,7 @@ public class BottomUI extends Render implements Updateable
         int infoX = Render.screenWidth*3/3;
         int infoY = (int)this.y+15;
         
-        new ButtonSetting(infoX-80, infoY);
+        new ButtonSetting(infoX-70, infoY);
         int infoDiffY = 185/3;
 //        windSpeedText = new TextUI("wind",infoX, infoY);
 //        //add icon
