@@ -22,6 +22,7 @@ public class ThreadSearch implements Runnable {
     @Override
     public void run() {
         search.setText("Searching ...");
+        search.setFocus(false);
         XMLBuilder.getForecastOfSearch(searchQ);
         search.setText("");
     }
