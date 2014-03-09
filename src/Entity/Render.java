@@ -193,4 +193,9 @@ public abstract class Render {
      {
          entities.remove(this);
      }
+     
+     public void addToEntities(Render obj)
+     {
+         entities.add(obj);
+     }
 }

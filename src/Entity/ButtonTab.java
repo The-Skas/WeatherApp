@@ -34,7 +34,7 @@ public class ButtonTab extends Button {
     private int day_i;
     public ButtonTab(float x, float y, String text) {
         super(imgPATH, x, y, 1.0f, text);
-        this.scale = 0.95f;
+        this.scale = 1.25f;
         tabList.add(this);
         
         if(ButtonTab.activeButton == null)

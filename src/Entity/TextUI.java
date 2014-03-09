@@ -42,7 +42,7 @@ public class TextUI extends Render
         super(x,y);
         this.text = text;
         this.scale = 1.0f;
-        this.font = new Font(Font.SERIF, Font.BOLD, 35);
+        this.font = new Font("Verdana", Font.BOLD, 30);
         this.fontw = new TrueTypeFont(font, true);
         this.fontSizeRef = this.font.getSize();
     }
@@ -55,15 +55,16 @@ public class TextUI extends Render
         this.font = font;
         this.fontw = new TrueTypeFont(font, true);
         this.fontSizeRef = this.font.getSize();
+
     }
     public TextUI(Render container, String text)
     {
-        this(text, 0 ,0, new Font(Font.SERIF, Font.BOLD, 35));
+        this(text, 0 ,0, new Font("Verdana", Font.BOLD, 30));
         this.container = container;
     }
     public TextUI(Render container, String text, Font font)
     {
-        this(text,0 ,0, new Font(Font.SERIF, Font.BOLD, 35));
+        this(text,0 ,0, font);
         this.container = container;
         this.font = font;
     }

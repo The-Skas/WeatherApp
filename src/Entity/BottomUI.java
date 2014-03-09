@@ -48,7 +48,7 @@ public class BottomUI extends Render implements Updateable
         {
             //Additionally, each button should store the state of the weather.
             new ButtonTab(
-                30+quarterScreen + spanByMAX*i,185+this.getY(),"Feb 27"
+                5+quarterScreen + spanByMAX*i,170+this.getY(),"Feb 27"
             );
         }
         
@@ -58,9 +58,10 @@ public class BottomUI extends Render implements Updateable
                             new Font(Font.SERIF, Font.BOLD, 70));
         tempratureText.x = Render.screenWidth*1.0f/2.0f;
         
-        int infoX = Render.screenWidth*2/3;
+        int infoX = Render.screenWidth*3/3;
         int infoY = (int)this.y+15;
         
+        new ButtonSetting(infoX-80, infoY);
         int infoDiffY = 185/3;
 //        windSpeedText = new TextUI("wind",infoX, infoY);
 //        //add icon
@@ -74,9 +75,25 @@ public class BottomUI extends Render implements Updateable
     {
         WeatherInfo inf = null;
         int i = ButtonTab.SELECTED_IND;
-        tempratureText.setText(""+Forecast.current.getFiveDays()[i][WeatherInfo.HI.ordinal()]
+        
+        float tempHigh = Float.parseFloat
+                        (
+                            Forecast.current.getFiveDays()[i][WeatherInfo.HI.ordinal()]
+                        );
+        
+        float tempLow = Float.parseFloat
+                        (
+                            Forecast.current.getFiveDays()[i][WeatherInfo.LOW.ordinal()]
+                        );
+        //is farenheit
+        if(!(Forecast.current.isCelsius()))
+        {
+            tempHigh = tempHigh * 1.8f + 32;
+            tempLow  = tempLow  * 1.8f + 32;
+        }
+        tempratureText.setText((int)tempHigh
                               +""+Forecast.current.getUnits()+" / "
-                              +""+Forecast.current.getFiveDays()[i][WeatherInfo.LOW.ordinal()]
+                              +(int)tempLow
                               +""+Forecast.current.getUnits());
         
         String code = Forecast.current.getFiveDays()[i][WeatherInfo.CODE.ordinal()];

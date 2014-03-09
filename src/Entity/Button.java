@@ -6,6 +6,7 @@
 
 package src.Entity;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Graphics;
@@ -26,12 +27,13 @@ import src.MouseW;
 */
 public abstract class Button extends Render implements Updateable {
     protected enum ButtonState {UP, DOWN, ROLLOVER};
+    public static ArrayList<Button> topButtons = new ArrayList<Button>();
     //So derived buttons can access 'color'
     protected Color color;
     private ButtonState state;
     public Font font;
     public TextUI text;
-    
+    public boolean isHit;
     /*
      * Creates a Button object with the following params
      * @param path: the name of the image in the res folder
@@ -63,7 +65,10 @@ public abstract class Button extends Render implements Updateable {
             Logger.getLogger(Button.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    public boolean isHit()
+    {
+        return this.isHit;
+    }
     public boolean isButtonDown()
     {
         return (state == ButtonState.DOWN);
@@ -87,26 +92,34 @@ public abstract class Button extends Render implements Updateable {
     //All logic here.
     @Override
     public void update(int delta) {
-        if(this.isHit(MouseW.getX(), MouseW.getY()))
+        if(Button.topButtons.isEmpty()
+        || Button.topButtons.contains(this))
         {
-            if(MouseW.isButtonDown(0))
+            //reset is hit, since it only occurs once per an update cycle.
+            this.isHit = false;
+            if(this.isHit(MouseW.getX(), MouseW.getY()))
             {
-                state = ButtonState.DOWN;
-            }
-            else if(state == ButtonState.DOWN)
-            {
-                this.action();
-                state = ButtonState.ROLLOVER;
+                if(MouseW.isButtonDown(0))
+                {
+                    state = ButtonState.DOWN;
+                }
+                else if(state == ButtonState.DOWN)
+                {
+                    this.action();
+                    this.isHit = true;
+                    state = ButtonState.ROLLOVER;
+                }
+                else
+                {
+                    state = ButtonState.ROLLOVER;
+                }
             }
             else
             {
-                state = ButtonState.ROLLOVER;
+                state = ButtonState.UP;
             }
         }
-        else
-        {
-            state = ButtonState.UP;
-        }
+       
     }
     
    

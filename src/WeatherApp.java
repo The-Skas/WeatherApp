@@ -35,6 +35,9 @@ import src.*;
 import src.Entity.*;
 
 public class WeatherApp extends BasicGame {
+        //to communicate across
+        public static boolean resolutionChanged = false;
+        
         private Image img;
         private Sun sun;
         private boolean toggleResolution = false;
@@ -56,26 +59,35 @@ public class WeatherApp extends BasicGame {
             Font tFont =new Font(java.awt.Font.SERIF, java.awt.Font.BOLD, 35);
             TrueTypeFont uFont = new TrueTypeFont(tFont, true);
             
-            this.searchField = new TextField(gc , uFont, 0 , 0 , 200 , 35, new ComponentListener() {
-                public void componentActivated(AbstractComponent ac) {
-                    System.out.println("Hey TextField here!");
-                    String s = searchField.getText();
-                    ThreadSearch threadSearch = new ThreadSearch(searchField);
-                    Thread t = new Thread(threadSearch);
-                    t.start();
-                  
-                }
-            });
-            this.searchField.setBackgroundColor(Color.gray);
-            new WeatherGroup();
+            new SearchField(gc);
             
+            new WeatherGroup();
             //DrawBottomUI
             new BottomUI(-2, 520);
+            
+            SettingsWindow.getInstance();
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException 
         {
+            if(WeatherApp.resolutionChanged)
+            {
+                WeatherApp.resolutionChanged = false;
+                AppGameContainer gc = (AppGameContainer) container;
+                System.out.println("screen width value b4!!: "+gc.getScreenWidth());
+                gc.setDisplayMode(Render.screenWidth, Render.screenHeight, false);
+
+
+
+                for(int i = 0; i < entities.size();i++)
+                {
+                    if(entities.get(i) instanceof Render)
+                    {
+                        entities.get(i).reInit();
+                    }
+                }
+            }
 //            Sound.update(delta);
            for(int i = 0; i < entities.size();i++)
            {
@@ -85,59 +97,26 @@ public class WeatherApp extends BasicGame {
                }
            }
            
-           if(container.getInput().isKeyDown(Input.KEY_BACKSLASH))
-           {
-            int newWidthRes; int newHeightRes;
-            if(this.toggleResolution)
-            {
-                newWidthRes = 1024;
-                newHeightRes = 768;
-            }
-            else
-            {
-                newWidthRes = 480;
-                newHeightRes = 320;
-            }
-            
-            AppGameContainer gc = (AppGameContainer) container;
-            System.out.println("screen width value b4!!: "+gc.getScreenWidth());
-            gc.setDisplayMode(newWidthRes, newHeightRes, false);
-            
-            System.out.println("screen width value!!: "+gc.getScreenWidth());
-            Render.screenHeight = newHeightRes;
-            Render.screenWidth =  newWidthRes;
-            
-            for(int i = 0; i < entities.size();i++)
-            {
-                if(entities.get(i) instanceof Render)
-                {
-                    entities.get(i).reInit();
-                }
-            }
-            this.toggleResolution = !this.toggleResolution;
-           }
-          
+           
 	}
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException 
         {
-           g.setBackground(Color.black);
+           g.setBackground(Color.gray.darker(0.5f));
            for(int i = 0; i < entities.size();i++)
            {
                
                 entities.get(i).render(g);
                
            }
+           
+           //Renders the search field.
            if(this.searchField != null)
            {
              this.searchField.render(container, g);
-            g.drawString("Location: "+Forecast.currentLocation, 0, 30);
+             g.drawString("Location: "+Forecast.currentLocation, 0, 30);
 
-           }
-           else
-           {
-               System.out.println("Search field is NULL!");
            }
 	}
         

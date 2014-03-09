@@ -54,7 +54,6 @@ public class Sun extends Render implements Updateable {
         
         float distanceOfCenters = centerOfEarth-centerOfSun;
         this.img.setCenterOfRotation(this.getWidth()/2.0f, this.getY() + distanceOfCenters );
-        
     }
     
     public void setTemprature(String temp)
@@ -83,11 +82,14 @@ public class Sun extends Render implements Updateable {
 
     public void update(int delta) 
     {
-//        this.rot += 0.1*0.1 * delta;
-        this.rot = MouseW.getX()/500.0f;
+        //replace this with the Camera Render.
+        if(-1 == -1)
+            this.rot = 0;
+        else
+            this.rot =(180.0f * MouseW.getX()/(float)Render.screenWidth) - 90.0f;
        
         this.color.b = 1.0f-this.getTemprature();
-//        this.img.setRotation(this.rot);
+        this.img.setRotation(this.rot);
         
     }
     

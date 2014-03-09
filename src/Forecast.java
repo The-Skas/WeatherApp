@@ -87,6 +87,10 @@ public class Forecast
         else return false;
     }
     
+    public void setUnits(char unit)
+    {
+        units = unit;
+    }
     public String toString()
     {
         String s = "TEMPRATURE: "+getWeatherToday() + "\n";

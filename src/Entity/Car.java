@@ -25,8 +25,10 @@ public class Car extends Render implements Updateable {
     @Override
     public void update(int delta) {
         //Animate car spinning.
+        //adjust these spazzing to a smaller range for the iTL machines.
         float rangeTurbulance = (float) (Math.random() * 20.0f - 10.0f);
-        this.rot = rangeTurbulance/delta * this.getScale();
+        float deltaf = delta;
+        this.rot = rangeTurbulance/deltaf * this.getScale();
         this.img.setRotation(this.rot);
     }
     
