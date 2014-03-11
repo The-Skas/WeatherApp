@@ -24,7 +24,7 @@ import static src.XMLBuilder.getLocation;
  */
 public class ButtonTab extends Button {
     private static final String imgPATH = "tab.png";
-    private static ArrayList<ButtonTab> tabList = new ArrayList<>();
+    public static ArrayList<ButtonTab> tabList = new ArrayList<>();
     public static ButtonTab activeButton;
     
     public static int SELECTED_IND = 0;
@@ -48,7 +48,24 @@ public class ButtonTab extends Button {
         
     }
     
+    public static void IncrementDay()
+    {
+       if(SELECTED_IND < tabList.size()-1)
+       {
+           SELECTED_IND++;
+           ButtonTab.tabList.get(SELECTED_IND).action();
+       }
+    }
     
+    public static void decrementDay()
+    {
+       if(SELECTED_IND > 0)
+       {
+           SELECTED_IND--;
+           ButtonTab.tabList.get(SELECTED_IND).action();
+       }
+        
+    }
     @Override
     public void update(int delta)
     {
@@ -87,6 +104,10 @@ public class ButtonTab extends Button {
         this.isSelected = true;
         
         ButtonTab.activeButton.isSelected = false; 
+        //sets the button as over state for the previous button
+        ButtonTab.activeButton.color = new Color(255,255,255,255);
+
+        //changes button
         ButtonTab.activeButton = this;
         
         ButtonTab.SELECTED_IND = this.day_i;

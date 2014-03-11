@@ -29,6 +29,10 @@ public class Sun extends Render implements Updateable {
     
     private float temprature;
     
+    private int sleepms = 0;
+    
+    private static int ONE_SECOND_MS = 1000;
+    
     public Sun(int x,int y,float scale) throws SlickException
     {
         super();
@@ -82,16 +86,38 @@ public class Sun extends Render implements Updateable {
 
     public void update(int delta) 
     {
-        //replace this with the Camera Render.
-        if(-1 == -1)
-            this.rot = 0;
-        else
-            this.rot =(180.0f * MouseW.getX()/(float)Render.screenWidth) - 90.0f;
-       
         this.color.b = 1.0f-this.getTemprature();
-        this.img.setRotation(this.rot);
+
+        //replace this with the Camera Render.
         
+        this.rot =(190.0f * MouseW.getX()/(float)Render.screenWidth) - 95.0f;
+
+            //Limits the rotation.
+            
+
+            this.img.setRotation(this.rot);
+            if(this.sleepms <= 0)
+            {
+                if(this.rot >= 90.0f)
+                {
+                    this.rot = 90.0f;
+                    ButtonTab.IncrementDay();
+                    this.sleepms = 1000;
+                }
+                else if(this.rot <= -90.0f)
+                {
+                    this.rot = -90.0f;
+                    ButtonTab.decrementDay();
+                    this.sleepms = 1000;
+                }
+            }
+            else
+            {
+                this.sleepms -= delta;
+            }
     }
-    
-    
+        
 }
+    
+    
+

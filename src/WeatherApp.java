@@ -65,7 +65,8 @@ public class WeatherApp extends BasicGame {
             //DrawBottomUI
             new BottomUI(-2, 520);
             
-            SettingsWindow.getInstance();
+            SettingsWindow.getInstance().destroy();
+            
 	}
 
 	@Override
