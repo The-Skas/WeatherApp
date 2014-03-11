@@ -24,25 +24,26 @@ public class Sound
     {
         String file;
        
+        //For linux compatability need "./DIR
         switch(code)
         {
-            case 0: file = "res/sounds/xylo.wav";
+            case 0: file = "./res/sounds/xylo.wav";
                     break;
-            case 1: file = "res/sounds/trumpet.wav";
+            case 1: file = "./res/sounds/trumpet.wav";
                     break;
-            case 2: file = "res/sounds/bone.wav";
+            case 2: file = "./res/sounds/bone.wav";
                     break;
-            case 3: file = "res/sounds/rain.wav";
+            case 3: file = "./res/sounds/rain.wav";
                     break;
-            case 4: file = "res/sounds/thunder.wav";
+            case 4: file = "./res/sounds/thunder.wav";
                     break;
-            case 5: file = "res/sounds/snow.wav";
+            case 5: file = "./res/sounds/snow.wav";
                     break;
-            case 6: file = "res/sounds/fogHorn.wav";
+            case 6: file = "./res/sounds/fogHorn.wav";
                     break;
-            case 7: file = "res/sounds/creakv2.wav";
+            case 7: file = "./res/sounds/creakv2.wav";
                     break;
-            default: file = "res/sounds/xylo.wav";
+            default: file = "./res/sounds/xylo.wav";
         }
 	
         AudioContext audioContext = new AudioContext();

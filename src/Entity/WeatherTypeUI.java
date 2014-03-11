@@ -20,7 +20,7 @@ import src.Forecast;
 public class WeatherTypeUI extends Render implements Updateable 
 {
     private static final String PATH = "UIType.png";
-    private Image [] weatherTypeImgs = new Image[6];
+    private Image [] weatherTypeImgs = new Image[8];
     private int lastInd = 0;
     
     public static int CURR_TYPE = 0;
